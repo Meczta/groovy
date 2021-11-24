@@ -1,0 +1,29 @@
+pipeline {
+agent any
+parameters {
+    string(name: 'repo_branch', defaultValue: 'development', description: 'The branch to be checked out')
+    string(name: 'git_repo',  defaultValue: 'ssh://git@my-server.com/middleware.git' description: 'Git repository from where we are going to checkout the code')
+
+}
+options {
+
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+    disableConcurrentBuilds()
+    timeout(time: 10, unit: 'MINUTES')
+}
+triggers {
+    pollSCM('* * * * *')
+}
+stages {
+    stage('Checkout git repo') {
+        steps {
+            git branch: "${params.repo_branch}", url: "${params.git_repo}", credentialsId: 'git-credentials'
+        }
+    }
+    stage('Build binary') {
+        steps {
+            sh "./gradlew clean build -x test"
+        }
+    }
+}
+}
