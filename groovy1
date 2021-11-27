@@ -46,11 +46,6 @@ stages {
             }
         }
     }
-    }
-    stage('Build binary') {
-        steps {
-            sh "./sayt1 clean build -x test"
-        }
-    }
+    }    
 }
 }
