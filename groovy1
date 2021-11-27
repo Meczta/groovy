@@ -1,8 +1,8 @@
 pipeline {
 agent any
 parameters {
-    string(name: 'repo_branch', defaultValue: 'development', description: 'The branch to be checked out')
-    string(name: 'git_repo',  defaultValue: 'ssh://git@github.com:Meczta/sayt.git', description: 'Git repository from where we are going to checkout the code')
+    string(name: 'main', defaultValue: 'development', description: 'The branch to be checked out')
+    string(name: 'sayt',  defaultValue: 'ssh://git@github.com:Meczta/sayt.git', description: 'Git repository from where we are going to checkout the code')
 
 }
 options {
