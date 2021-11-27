@@ -19,6 +19,7 @@ stages {
         steps {
             git branch: "${params.repo_branch}", url: "${params.git_repo}", credentialsId: 'git-credentials'
         }
+    }
     stage("docker login") {
             steps {
                 echo " ============== docker login =================="
