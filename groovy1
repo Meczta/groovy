@@ -22,7 +22,7 @@ stages {
     }
     stage('Build binary') {
         steps {
-            sh "./gradlew clean build -x test"
+            sh "./sayt1 clean build -x test"
         }
     }
 }
