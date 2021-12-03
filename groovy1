@@ -33,7 +33,7 @@ stages {
     stage("create docker image") {
         steps {
             echo " ============== start building image =================="
-            dir ('docker/toolbox') {
+            dir ('docker/jenkins') {
               sh 'docker build -t meczta/jenkins:latest . '
             }
         }
