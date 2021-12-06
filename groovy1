@@ -1,49 +1,12 @@
 pipeline {
 agent any
-parameters {
-    string(name: 'repo_branch', defaultValue: 'main', description: 'The branch to be checked out')
-    string(name: 'git_repo',  defaultValue: 'https://github.com/Meczta/sayt.git', description: 'Git repository from where we are going to checkout the code')
-
-}
-options {
-
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-    disableConcurrentBuilds()
-    timeout(time: 10, unit: 'MINUTES')
-}
 triggers {
     pollSCM('* * * * *')
 }
 stages {
-    stage('Checkout git repo') {
-        steps {
-            git branch: "${params.repo_branch}", url: "${params.git_repo}", credentialsId: 'git-credentials'
-        }
-    }
-    stage("docker login") {
-        steps {
-            echo " ============== docker login =================="
-            withCredentials([usernamePassword(credentialsId: 'dockerhub_meczta', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh """
-                docker login -u $USERNAME -p $PASSWORD
-                """
-            }
-        }
-    }
-    stage("create docker image") {
-        steps {
-            echo " ============== start building image =================="
-            dir ('docker/jenkins') {
-              sh 'docker build -t meczta/jenkins:latest . '
-            }
-        }
-    }
-    stage("docker push") {
-        steps {
-            echo " ============== start pushing image =================="
-            sh '''
-            docker meczta/jenkins:latest
-            '''
+        stage("First step") {
+            steps {
+                sh 'ssh dream@192.168.56.103 \'docker run https://github.com/Meczta/sayt/tree/test1''
             }
         }
     }    
