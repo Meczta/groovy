@@ -10,9 +10,15 @@ triggers {
     pollSCM('* * * * *')
 }
 stages {
+    stage('Example') {
+            steps {
+                echo 'Hello World'
+            }
+        }
     stage("First step") {
         steps {
             sh 'ssh dream@192.168.56.102 \'docker run https://github.com/Meczta/sayt.git\''
+            }
         }
     }  
 }
