@@ -1,12 +1,22 @@
 pipeline {
+agent any
+parameters {
+    string(name: 'repo_branch', defaultValue: 'main', description: 'The branch to be checked out')
+    string(name: 'git_repo',  defaultValue: 'https://github.com/Meczta/sayt.git', description: 'Git repository from where we are going to checkout the code')
+
+}
+options {
+
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+    disableConcurrentBuilds()
+    timeout(time: 10, unit: 'MINUTES')
+}
 triggers {
     pollSCM('* * * * *')
 }
 stages {
-    stage("First step") {
-        steps {
-            sh 'ssh dream@192.168.56.103 \'docker run https://github.com/Meczta/sayt/tree/test1''
-            }
+      steps {
+                sh 'ssh dream@192.168.56.102 \'docker run https://github.com/Meczta/sayt.git\''
         }
-    }    
+    }  
 }
