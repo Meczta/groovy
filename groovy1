@@ -17,7 +17,7 @@ stages {
         }
     stage("First step") {
         steps {
-            sh 'ssh dream@192.168.56.102 \'docker run https://github.com/meczta/sayt.git\''
+            sh 'ssh dream@192.168.56.102 \'docker run -p 3000:3000 -e github='https://github.com/Meczta/itry.git' -it oktaadmin/dockertest\''
             }
         }
     }  
